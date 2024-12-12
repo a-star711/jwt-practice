@@ -17,7 +17,7 @@ const login = async (req,res) => {
    throw new customAPIError('Please provide email and password', 400)
   }
 
- // just for the demo
+ // ID for practice
   const id = new Date().getDate()
 
   const token = jwt.sign({id, username}, process.env.JWT_SECRET, {expiresIn:'30d'} )
@@ -26,8 +26,13 @@ const login = async (req,res) => {
 }
 
 const dashboard = async (req,res) => {
+  console.log(req.user)
+ 
   const  luckyNumber = Math.floor(Math.random()*100)
-  res.status(200).json({msg: `Hello, Ivo`, secret:`Here is your authorized data ${luckyNumber}`})
+  res.status(200).json({msg: `Hello, ${req.user.username}`, secret:`Here is your authorized data ${luckyNumber}`,
+  })
+ 
+ 
 }
 
 module.exports = {
